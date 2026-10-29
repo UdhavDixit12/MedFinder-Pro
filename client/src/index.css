@@ -1,0 +1,93 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --color-brand-50: #eff5ff;
+  --color-brand-100: #dbe8fe;
+  --color-brand-200: #bfd5fe;
+  --color-brand-300: #93b8fd;
+  --color-brand-400: #6093fa;
+  --color-brand-500: #3b6ff6;
+  --color-brand-600: #2554eb;
+  --color-brand-700: #1d41d8;
+  --color-brand-800: #1e36af;
+  --color-brand-900: #1e338a;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
+  --shadow-raised: 0 4px 12px rgb(15 23 42 / 0.08), 0 2px 4px rgb(15 23 42 / 0.04);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+  body {
+    @apply bg-slate-50 font-sans text-slate-800 antialiased;
+    overflow-x: hidden;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Leaflet adjustments */
+.leaflet-container {
+  font-family: inherit;
+  z-index: 0;
+}
+.leaflet-container a {
+  color: var(--color-brand-700);
+}
+.mf-marker {
+  background: transparent;
+  border: none;
+}
+.mf-marker .pin {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px 9999px 9999px 0;
+  transform: rotate(-45deg);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgb(15 23 42 / 0.35);
+  transition: transform 150ms ease;
+}
+.mf-marker .pin span {
+  transform: rotate(45deg);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+.mf-marker.is-selected .pin {
+  transform: rotate(-45deg) scale(1.3);
+  box-shadow: 0 0 0 4px rgb(37 84 235 / 0.35), 0 2px 8px rgb(15 23 42 / 0.4);
+}
+.mf-origin {
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: var(--color-brand-600);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 6px rgb(37 84 235 / 0.25);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
