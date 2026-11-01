@@ -2,10 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Circle, MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { categoryMeta, displayName, formatDistance } from '../utils/facility.js';
-
-const TILE_URL = import.meta.env.VITE_TILE_URL || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-const TILE_ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
+import { TILE_ATTRIBUTION, TILE_URL } from '../utils/mapTiles.js';
 
 const iconCache = new Map();
 function markerIcon(category, selected) {

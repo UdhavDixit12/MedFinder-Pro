@@ -12,6 +12,7 @@ import { Skeleton } from '../components/ui/Skeleton.jsx';
 import useDocumentTitle from '../hooks/useDocumentTitle.js';
 import { hospitalService } from '../services/index.js';
 import { categoryMeta, displayName } from '../utils/facility.js';
+import { TILE_ATTRIBUTION, TILE_URL } from '../utils/mapTiles.js';
 
 const VALID_TYPES = new Set(['node', 'way', 'relation']);
 
@@ -112,11 +113,7 @@ export default function FacilityPage() {
           <div className="space-y-2">
             <div className="h-80 overflow-hidden rounded-2xl border border-slate-200 shadow-card lg:sticky lg:top-24 lg:h-[28rem]" role="region" aria-label="Facility location map">
               <MapContainer center={[facility.lat, facility.lon]} zoom={16} scrollWheelZoom={false} className="h-full w-full">
-                <TileLayer
-                  url={import.meta.env.VITE_TILE_URL || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'}
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  maxZoom={19}
-                />
+                <TileLayer url={TILE_URL} attribution={TILE_ATTRIBUTION} maxZoom={19} />
                 <Marker position={[facility.lat, facility.lon]} icon={pinIcon(facility.category)} title={displayName(facility)} />
               </MapContainer>
             </div>

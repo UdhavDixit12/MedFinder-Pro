@@ -20,9 +20,9 @@ import { isAiConfigured } from './services/symptomService.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-/** Extra image origins for a custom tile server (CSP_TILE_ORIGINS, comma-separated). */
+/** Tile image hosts allowed by CSP. CSP_TILE_ORIGINS is comma-separated; MapTiler is the default. */
 const tileOrigins = () =>
-  (process.env.CSP_TILE_ORIGINS || '')
+  (process.env.CSP_TILE_ORIGINS || 'https://api.maptiler.com')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);

@@ -44,7 +44,7 @@ Features:
 
 - **Node.js 20.11+** (developed and tested on Node 24.18, npm 11)
 - **MongoDB 6+** — local (`mongodb://127.0.0.1:27017`) or MongoDB Atlas
-- Internet access to `nominatim.openstreetmap.org`, the Overpass endpoints and `tile.openstreetmap.org`
+- Internet access to `nominatim.openstreetmap.org`, the Overpass endpoints and `api.maptiler.com`
 
 ## Setup
 
@@ -99,14 +99,14 @@ If MongoDB is unreachable the API still starts: hospital search keeps working, w
 | `OVERPASS_FAILOVER_TIMEOUT_MS` | – | Timeout for earlier endpoints before failing over (default `12000`) |
 | `AI_API_KEY`, `AI_API_URL`, `AI_MODEL` | – | Optional OpenAI-compatible chat-completions provider for the symptom checker |
 | `SERVE_CLIENT` | – | `true` to serve `client/dist` from Express (single-server deployment) |
-| `CSP_TILE_ORIGINS` | – | Extra image origins if you use a custom tile server |
+| `CSP_TILE_ORIGINS` | – | Comma-separated map-image hosts for the content security policy (default `https://api.maptiler.com`) |
 
 Client build-time variables (`client/.env`, see `client/.env.example`) are **public** and must never contain secrets:
 
 | Variable | Purpose |
 | --- | --- |
 | `VITE_API_BASE_URL` | API origin when the API is on a different host, e.g. `https://api.example.com` (leave empty for same-origin) |
-| `VITE_TILE_URL` | Optional alternative tile URL template |
+| `VITE_TILE_URL` | MapTiler tile template, including your key, e.g. `https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=YOUR_MAPTILER_KEY`. Required for map images. Public in the bundle; set it before `npm run build`. |
 | `VITE_DEV_API_PROXY` | Dev-only proxy target (default `http://localhost:5000`) |
 
 ## API
@@ -196,7 +196,7 @@ Secrets live only in `server/.env` or the host's environment settings. The clien
 - **Data:** © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), ODbL. Attribution is shown in the map, results, footer and details.
 - **Nominatim** ([policy](https://operations.osmfoundation.org/policies/nominatim/)): max 1 request/second, a valid identifying User-Agent, no autocomplete, and results must be cached. All of these are implemented. For heavy traffic, self-host Nominatim or use a commercial geocoder.
 - **Overpass API** ([public instances](https://wiki.openstreetmap.org/wiki/Overpass_API#Public_Overpass_API_instances)): shared and sometimes overloaded (the main instance returned "at capacity" errors during development). For production traffic, run your own instance or use a commercial provider.
-- **Tiles** ([policy](https://operations.osmfoundation.org/policies/tiles/)): `tile.openstreetmap.org` is for light use only. For a high-traffic deployment, set `VITE_TILE_URL` (and `CSP_TILE_ORIGINS`) to a tile provider you have an agreement with.
+- **Tiles:** map images come from [MapTiler](https://www.maptiler.com/copyright/) (`VITE_TILE_URL`), drawn from OpenStreetMap data. Both credits are shown on the map. `CSP_TILE_ORIGINS` must include the tile host (`https://api.maptiler.com`). The OpenStreetMap volunteer tile server is not used.
 
 ## Known limitations
 
